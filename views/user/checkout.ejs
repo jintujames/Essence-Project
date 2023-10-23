@@ -1,0 +1,589 @@
+<%- include('header') %>
+
+    <main class="main">
+
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <h4>Check Out</h4>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="mt-50 mb-50">
+            <div class="container">
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <% addresses.forEach(function(address, index) { %>
+                            <div class="card mb-5 mb-lg-0">
+                                <div class="card-body">
+                                    <style>
+                                        .custom-radio-label {
+
+                                            display: flex;
+                                            align-items: center;
+                                        }
+
+                                        .custom-radio-input {
+                                            width: 16px;
+                                            height: 16px;
+                                            margin-right: 10px;
+                                        }
+                                    </style>
+                                    <label class="custom-radio-label">
+                                        <input type="radio" name="defaultAddress" class="form-check-input"
+                                            value="<%= address._id %>" id="address">
+                                        <input type="hidden" name="selectedAddress" id="selectedAddressInput"
+                                            value="<%= address._id %>">
+                                        <address>
+                                            <%= address.name %><br>
+                                                <%= address.address %><br>
+                                                    <%= address.district %><br>
+                                                        <%= address.city %><br>
+                                                            <%= address.pincode %>
+                                        </address>
+                                        <p>
+                                            <%= address.phone %>
+                                        </p>
+                                    </label>
+                                </div>
+                            </div>
+                            <% }); %>
+
+                                <div class="text-center mt-3">
+                                    <a href="/newAddress" class="btn btn-primary">Add New Address</a>
+                                </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-6">
+                        <div class="order_review">
+                            <div class="mb-20">
+                                <h4>Your Orders</h4>
+                            </div>
+                            <div class="table-responsive order_table text-center">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% let subtotal=0; %> <!-- Initialize subTotal variable -->
+                                            <% user.cart.forEach(cartItem=> { %>
+                                                <tr>
+                                                    <td class="image product-thumbnail"><img
+                                                            src="/admin/assets/productsImages/<%= cartItem.products.image[0] %>"
+                                                            alt="#"></td>
+                                                    <td>
+                                                        <h5><a href="shop-product-full.html">
+                                                                <%= cartItem.products.productName %>
+                                                            </a></h5> <span class="product-qty">x <%= cartItem.quantity
+                                                                %></span>
+                                                    </td>
+                                                    <% const itemTotal=cartItem.products.salePrice * cartItem.quantity;
+                                                        %>
+                                                        <td>$<%= itemTotal.toFixed(2) %>
+                                                        </td>
+                                                </tr>
+                                                <% subtotal +=itemTotal; %> <!-- Update subTotal with the itemTotal -->
+                                                    <% }); %>
+                                                        <tr>
+                                                            <th>SubTotal</th>
+                                                            <td class="product-subtotal" colspan="2" id="grandTotal"
+                                                                data-subtotal="<%= subtotal %>">$<%= subtotal.toFixed(2)
+                                                                    %>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Shipping</th>
+                                                            <td colspan="2"><em>Free Shipping</em></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <td colspan="2" class="product-subtotal" id="total"
+                                                                data-subtotal="<%= subtotal %>">
+                                                                <span class="font-xl text-brand fw-900">$<%=
+                                                                        subtotal.toFixed(2) %></span>
+                                                                <input type="hidden" id="hiddenTotal"
+                                                                    value="<%= subtotal %>" readonly>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="discount-row">
+                                                            <th>Discounted Amount</th>
+                                                            <td colspan="2" class="product-subtotal">
+                                                                <input type="hidden" id="hiddenDiscount" readonly>
+                                                                <span class="font-xl text-brand fw-900">
+                                                                    $<span id="discountAmount"></span>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="discount-row">
+                                                            <th>Grand Total After Discount</th>
+                                                            <td colspan="2" class="product-subtotal">
+                                                                <input type="hidden" id="hiddenDiscountedPrice"
+                                                                    readonly>
+                                                                <span class="font-xl text-brand fw-900">
+                                                                    $<span id="discountedPrice"></span>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                            <!-- Coupon Section -->
+                            <div class="mb-30 mt-50">
+                                <div class="heading_s1 mb-3">
+                                    <h4>Apply Coupon</h4>
+                                </div>
+                                <div class="total-amount">
+                                    <div class="left">
+                                        <div class="coupon">
+                                            <form action="#" target="_blank">
+                                                <div class="form-row row justify-content-center">
+                                                    <div class="form-group col-lg-6">
+                                                        <div class="custom-dropdown">
+                                                            <select class="form-control font-medium" id="couponDropdown"
+                                                                name="Coupon">
+                                                                <option value="">Select a Coupon</option>
+                                                                <% if (coupons.length===0) { %>
+                                                                    <option disabled>No available coupons</option>
+                                                                    <% } else { %>
+                                                                        <% coupons.forEach(function(coupon) { %>
+                                                                            <option value="<%= coupon._id %>">
+                                                                                <%= coupon.code %>
+                                                                            </option>
+                                                                            <% }); %>
+                                                                                <% } %>
+                                                            </select>
+                                                            <div class="coupon-details" id="couponDetails">
+                                                                <!-- Coupon details will be displayed here -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-6">
+                                                        <button type="button" class="btn btn-sm" id="applyCouponBtn"><i
+                                                                class="fi-rs-label mr-10"></i>Apply</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Coupon Section -->
+                            <div class="payment_method">
+                                <div class="mb-25">
+                                    <h5>Payment</h5>
+                                </div>
+                                <div class="payment_option">
+
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            id="codPayment" value="COD">
+                                        <label class="form-check-label" for="codPayment" data-bs-toggle="collapse"
+                                            data-target="#codCollapse" aria-controls="codCollapse">COD</label><br>
+                                        <div class="form-group collapse in" id="codCollapse">
+                                            <p class="text-muted mt-5">Pay via COD; you can pay with cash upon delivery
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Wallet -->
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            id="walletPayment" value="wallet">
+                                        <label class="form-check-label" for="walletPayment" data-bs-toggle="collapse"
+                                            data-target="#walletCollapse"
+                                            aria-controls="walletCollapse">Wallet</label><br>
+                                        <div class="form-group collapse in" id="walletCollapse">
+                                            <p class="text-muted mt-5">Pay using your wallet balance</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Online Payment -->
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option"
+                                            id="onlinePayment" value="onlinePayment">
+                                        <label class="form-check-label" for="onlinePayment" data-bs-toggle="collapse"
+                                            data-target="#onlinePayment" aria-controls="onlinePayment">Online
+                                            Payment</label><br>
+                                        <div class="form-group collapse in" id="onlineCollapse">
+                                            <p class="text-muted mt-5">Pay securely online with your credit/debit card
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                        <input type="hidden" id="cartData" name="cart" value="<%= JSON.stringify(user.cart) %>">
+                        <input type="hidden" id="quantity" name="quantity" value="<% user.cart.quantity %>">
+                        <input type="hidden" id="total" name="total" value="<%= subtotal.toFixed(2) %>">
+                        <a href="javascript:void(0);" class="btn btn-fill-out btn-block mt-30"
+                            onclick="placeOrder()">Place Order</a>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </section>
+    </main>
+    <style>
+        .custom-button-class {
+            width: 110px;
+            /* Adjust the width as needed */
+        }
+    </style>
+
+
+    <%- include('footer') %>
+        <script>
+
+            $("#checkout-form").submit((e) => {
+                e.preventDefault()
+                $.ajax({
+                    url: '/placeOrder',
+                    method: 'post',
+                    data: $('#checkout-form').serialize(),
+                    success: (response) => {
+                        console.log("response", response)
+                        if (response.codSuccess) {
+                            location.href = '/orderConfirmed'
+                        } else {
+                            razorPayPayment(response)
+                        }
+
+                    }
+                })
+            })
+
+            function razorPayment(order) {
+                var options = {
+                    "key": 'rzp_test_XeL7zWjuPQQ92d', // Enter the Key ID generated from the Dashboard
+                    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Acme Corp",
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "handler": function (response) {
+
+                        verifyPayment(order, response)
+                    },
+                    // "prefill": {
+                    //     "name": res.user.firstname+' '+res.user.lastname,
+                    //     "email": res.user.email,
+                    //     "contact": res.user.mobile
+                    // },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    },
+
+                    "modal": {
+                        "ondismiss": function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Payment Failed',
+                                text: 'Your payment was not successful. Please try again later.',
+                                confirmButtonColor: '#3085d6', // Customize the confirm button color
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/paymentFailed';
+                                }
+                            });
+                        },
+                        "handleback": false,
+                        "escape": false
+                    }
+
+                };
+                var rzp1 = new Razorpay(options);
+                // rzp1.on('payment.failed', function (response){
+                //     Swal.fire({
+                //            icon: 'error', 
+                //            title: 'Payment Failed',
+                //            text: 'Your payment was not successful. Please try again later.',
+                //            confirmButtonColor: '#3085d6', // Customize the confirm button color
+                //            confirmButtonText: 'OK',
+                //            allowOutsideClick: false, 
+                //          }).then((result) => {
+                //            if (result.isConfirmed) {
+                //              window.location.href = '/paymentFailed';
+                //            }
+                //          });
+                // });
+                rzp1.open()
+            }
+            function verifyPayment(payment, order) {
+                $.ajax({
+                    url: '/verifyPayment',
+                    data: {
+                        payment,
+                        order
+                    },
+                    method: 'POST',
+                    success: (response) => {
+                        if (response.status) {
+                            location.href = '/orderConfirmed'
+                        } else {
+                        }
+                    }
+                })
+            }
+            function getValueToSend() {
+                const discountedPriceElement = document.getElementById('hiddenDiscountedPrice');
+
+                const discountedPrice = discountedPriceElement.value;
+                const totalInputElement = document.getElementById('hiddenTotal');
+                console.log("DISCOUNTED PRICE", discountedPrice);
+                const final = totalInputElement.value;
+
+
+                if (discountedPrice) {
+                    console.log("discounted", discountedPrice)
+                    return discountedPrice;
+                } else {
+                    console.log("not discounted", final);
+                    return final;
+                }
+            }
+
+            function placeOrder() {
+
+                const valueToSend = Number(getValueToSend())
+
+
+                const selectedAddressId = document.querySelector('input[name="defaultAddress"]:checked').value;
+
+                // Get the selected payment method
+                const selectedPaymentMethod = document.querySelector('input[name="payment_option"]:checked').value;
+
+                // Get the cart data from the hidden input field
+                const cartData = JSON.parse(document.getElementById('cartData').value);
+
+                const total = document.getElementById('total').value;
+
+
+                // Create an array to store the product IDs
+                const productId = [];
+
+                // Iterate through the cart data and push the product IDs into the array
+                cartData.forEach(function (item) {
+                    productId.push(item.products._id);
+                });
+
+                // Create a data object with the selected address, payment method, and cart data
+                const data = {
+                    selectedAddress: selectedAddressId,
+                    paymentMethod: selectedPaymentMethod,
+                    cart: cartData,
+                    total: valueToSend,
+
+                    productId: productId // Include the product IDs here
+                };
+
+                // Send an AJAX POST request to your server
+                fetch('/placeOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then((response) => {
+                    return response.json()
+                })
+                    .then(data => {
+                        console.log(data);
+                        if (data.codSuccess) {
+                            window.location.href = '/orderConfirmed';
+                        } else if (data.walletSuccess) {
+                            window.location.href = '/orderConfirmed';
+
+                        }
+                        else {
+                            console.log("RESPONSE", data.onlinePaymentSuccess);
+                            razorPayment(data.response)
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+            // Add an event listener to the "Apply" button
+            document.getElementById("applyCouponButton").addEventListener("click", function (event) {
+                event.preventDefault();
+
+                // Get the selected coupon code from the input field
+                const selectedCouponCode = document.getElementById("couponInput").value;
+
+                // Send an AJAX request to apply the coupon
+                fetch("/apply-coupon", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ couponCode: selectedCouponCode }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.discount) {
+                            // Update the displayed discount and total
+                            // Update the DOM elements where you display subTotal and Total
+                            document.querySelector(".product-subtotal").innerHTML = `$${data.newTotal.toFixed(2)}`;
+                            document.querySelector(".coupon-savings").textContent = `$${data.discount.toFixed(2)}`;
+                        } else {
+                            // Handle errors (e.g., show error messages to the user)
+                            console.error(data.error);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            });
+
+            function applyCoupon() {
+                const selectedCouponId = $('#couponDropdown').val();
+                const currentTotal = parseFloat($('#totalAmount').text());
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/apply-coupon',
+                    data: {
+                        selectedCoupon: selectedCouponId,
+                        currentTotal: currentTotal,
+                    },
+                    success: function (response) {
+                        if (!response.error) {
+                            $('#discountPrice').text(response.discountPrice.toFixed(2));
+                            $('#updatedTotal').text(response.newTotal.toFixed(2));
+                        } else {
+                            alert('Invalid coupon. Please try another.');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while applying the coupon.');
+                    },
+                });
+            }
+
+            $('#applyCouponButton').click(applyCoupon);
+
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const couponDropdown = document.getElementById('couponDropdown');
+                const couponDetails = document.getElementById('couponDetails');
+
+                couponDropdown.addEventListener('change', function () {
+                    const selectedCouponId = couponDropdown.value;
+
+
+                    if (selectedCouponId) {
+                        fetch(`/selectCoupon/${selectedCouponId}`) // Replace with your API endpoint
+                            .then(response => response.json())
+                            .then(couponDetailsData => {
+                                couponDetails.innerHTML = `
+                        <h3>${couponDetailsData.code}</h3>
+                        <p class="font-weight-bold">${couponDetailsData.code}</p>
+                        <p class="font-weight-bold">${couponDetailsData.discountPercentage}% off upto Rs.${couponDetailsData.maxDiscount}</p>
+                        <!-- Add more coupon details as needed -->
+                    `;
+                            })
+                            .catch(error => {
+                                console.error('Error fetching coupon details:', error);
+                            });
+                    } else {
+                        couponDetails.innerHTML = '';
+                    }
+                    const couponDetailsData = {
+                        code: 'COUPON_CODE',
+                        description: 'Coupon Description',
+                        discountPercent: 10,
+                        maxDiscount: 100,
+                    };
+
+                    couponDetails.innerHTML = `
+                <h3>${couponDetailsData.code}</h3>
+                <p class="font-weight-bold">${couponDetailsData.description}</p>
+                <p class="font-weight-bold">${couponDetailsData.discountPercent}% off upto Rs.${couponDetailsData.maxDiscount}</p>
+                <!-- Add more coupon details as needed -->
+            `;
+                });
+            });
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#applyCouponBtn').click(function (event) {
+                    event.preventDefault(); // Prevent the form from submitting
+
+                    const selectedCouponId = $('#couponDropdown').val();
+                    const subtotal = $('.product-subtotal').data('subtotal'); // Corrected selector
+
+                    if (selectedCouponId) {
+
+
+                        $.ajax({
+                            type: 'GET',
+                            url: `/applyCoupon/${selectedCouponId}?subtotal=${subtotal}`,
+                            beforeSend: function () {
+                                console.log('Sending AJAX request...');
+                            },
+                            success: function (response) {
+                                console.log('AJAX request successful.');
+
+
+                                if (response.discountedPrice > 0) {
+                                    const discounts = response.discount;
+                                    const disscountedPrices = response.discountedPrice
+
+                                    discount = discounts.toFixed(2);
+                                    discountedPrice = disscountedPrices.toFixed(2);
+
+                                    $('#discountAmount').text(discount);
+                                    $('#hiddenDiscount').val(discount);
+                                    console.log("discountedPrice", discountedPrice);
+                                    $('#discountedPrice').text(discountedPrice);
+                                    $('#hiddenDiscountedPrice').val(discountedPrice);
+
+
+                                    $('.discount-row').show();
+                                }
+
+                            },
+                            error: function (error) {
+                                console.error('Error fetching coupon details:', error);
+                            }
+                        });
+                    } else {
+                        $('#couponDetails').empty();
+                    }
+                });
+            });
+
+
+        </script>

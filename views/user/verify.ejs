@@ -1,0 +1,78 @@
+<%- include('header') %>
+
+<main class="main">   
+    <section class="pt-150 pb-150">
+        <div class="container">
+            <div class="col-lg-10 m-auto">
+                <div class="col-lg-5 mx-auto"> <!-- Added mx-auto class here -->
+                    <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                        <div class="padding_eight_all bg-white">
+                            <div class="heading_s1">
+                                <h3 class="mb-30">Verify Now</h3>
+                            </div>
+
+                            <form method="post" action="/verify" method="post" onsubmit="return validate()">
+                                <div class="form-group">
+                                    <input type="text"  id="otp" name="otp" value=""
+                                    placeholder="Enter The OTP">
+                                    <p id="otpError"></p>
+
+                                </div>
+                                <!-- <div id="otp-timer">
+                                    <span id="timer">2:00</span> minutes
+                                    <a href="/resendverifyotp">Resend OTP</a>
+                                </div> -->
+                                
+                                <div class="login_footer form-group">
+                                    <div class="chek-form">
+                                        <div class="custome-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center"> 
+                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Verify</button>
+                                </div>
+                            </form>
+                            <% if (errMessage) { %>
+                                <div  class="alert alert-danger text-center mt-5" role="alert">
+                                    <%- errMessage %>
+                                </div>
+                            <% } %>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('footer') %>
+<script>
+
+    function otpValidate(){
+        const otp = document.getElementById('otp');
+        const otpRegex = /^[0-9]{4}$/;
+
+        if (otp.value.trim() === '') {
+            otperror.innerHTML = 'Otp is required'
+            otperror.style.color = 'red';
+         setTimeout(() => {
+            otperror.innerHTML = ''
+         }, 5000)
+         return false;
+      }
+   
+      if(!otpRegex.test(otp.value)){
+        otperror.innerHTML = 'Please enter a valid number'
+        otperror.style.color = 'red';
+         setTimeout(()=>{
+            otperror.innerHTML = ''
+         },5000)
+         return false;
+      }
+        
+    }
+</script>

@@ -1,0 +1,90 @@
+<%- include('header') %>
+
+<body>
+    
+    
+    
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html" rel="nofollow">Home</a>
+                    <span></span> Shop
+                    <span></span> Wishlist
+                </div>
+            </div>
+        </div>
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <% if (Array.isArray(wishlist) && wishlist.length > 0) { %>
+                            <table class="table shopping-summery text-center">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col" colspan="2">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wishlist.forEach(function(item) { %>
+                                      <% if (item.products) { %>
+                                        <tr>
+                                            <td class="image product-thumbnail">
+                                              <img src="/admin/assets/productsImages/<%= item.products.image[0] %>">
+                                            </td>
+                                            <td class="product-des product-name">
+                                              <h5 class="product-name"><a href="shop-product-right.html"><%= item.products.productName %></a></h5>
+                                              <p class="font-xs"><%= item.products.description %><br><%= item.products.brandName %></p>
+                                            </td>
+                                            <td class="price" data-title="Price">
+                                              <span>$<%= item.products.salePrice %></span>
+                                            </td>
+                                            
+                                          
+                                            <td class="text-right" data-title="Cart">
+                                                <form action="/cart" method="post">
+                                                    <% if (item.products.quantity > 0) { %>
+                                                    <button type="submit" class="btn btn-sm">Add to cart</button>
+                                                    <input type="hidden" value="<%= item.products._id %>" name="id" id="id">
+                                                    <% } else { %>
+                                                    <span class="out-of-stock">Out of Stock</span>
+                                                    <% } %>
+                                                </form>
+                                                
+                                          
+                                            </td>
+                                              
+                                            <td class="action" data-title="Remove">
+                                                <a href="/deleteWishlistProducts?id=<%= item.products._id %>"><i class="fi-rs-trash"></i></a>
+                                            </td>
+                                            
+                                            
+                                          </tr>
+                                      <% } %>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                            <% } else { %>
+                            <div class="container mt-5 mb-5">
+                                <div class="card mt-5 mb-5">
+                                    <div class="card-body mt-5 mb-5">
+                                        <h2 class="card-title text-center">Looks like your wishlist is empty</h2>
+                                        <p class="card-text text-center">We have some more items you might like.</p>
+                                        <div class="text-center">
+                                            <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <%- include('footer') %>

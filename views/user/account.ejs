@@ -1,0 +1,192 @@
+<%- include('header') %>
+
+<main class="main">
+    <section class="pt-50 pb-150 container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"> <!-- Sidebar with tabs -->
+                    <div class="dashboard-menu">
+                        <ul class="nav flex-column" role="tablist">
+                            
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="dashboard-tab"  href="/account"   ><i class="fi-rs-settings-sliders mr-10"></i>Account</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link " id="orders-tab"  href="/orders" ><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" id="address-tab" href="/myAddress" ><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="account-detail-tab"  href="/wallet" ><i class="fi-rs-user mr-10"></i>Wallet</a>
+                                </li>
+                                
+                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9"> <!-- Content area -->
+                    <div class="content-header">
+                        <div>
+                            <h2 class="content-title card-title">My Account</h2>
+                            
+                        </div>
+                        
+                    </div>
+
+                    <section class="content-main">
+                        <div class="row">
+                            <form action="/account" method="post" onsubmit="return validate()">
+                                <div class="col-lg-6">
+                                  <div class="card mb-4">
+                                    <div class="card-header">
+                                      <h4>Profile</h4>
+                                    </div>
+                                    <div class="card-body">
+                                      <div class="mb-4">
+                                        <label for="fname" class="form-label">First Name</label>
+                                        <input type="text" name="fname" id="fname" value="<%= user.fname %>" readonly>
+                                        <p id="fnameError" style="color: red;"></p>
+                                      </div>
+                                      <div class="mb-4">
+                                        <label for="lname" class="form-label">Last Name</label>
+                                        <input type="text" name="lname" id="lname" value="<%= user.lname %>" readonly>
+                                        <p id="lnameError" style="color: red;"></p>
+                                      </div>
+                                      
+                                      
+                                      <div class="mb-4">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" name="email" id="email" value="<%= user.email %>" readonly>
+                                        <p id="emailError" style="color: red;"></p>
+                                      </div>
+                                      
+                                      <div class="row">
+                                        <div class="col-lg-4">
+                                          <div class="mb-4">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="text" name="mobile" id="mobile" value="<%= user.mobile %>" readonly>
+                                            <p id="mobileError" style="color: red;"></p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <button id="editButton" type="button" class="btn btn-primary">Edit</button>
+                                      <button id="updateButton" type="submit" class="btn btn-primary" style="display: none;">Update</button>
+                                    </div>
+                                  </div> <!-- card end// -->
+                                </div>
+                              </form>
+                              
+                              
+                              
+                              
+
+                            
+                            
+                        </div>
+                    </section> <!-- card-body end// -->
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    
+<%- include('footer') %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const editButton = document.getElementById('editButton');
+      const updateButton = document.getElementById('updateButton');
+      const inputs = document.querySelectorAll('input[readonly]');
+  
+      editButton.addEventListener('click', function () {
+        for (const input of inputs) {
+          input.removeAttribute('readonly');
+        }
+        editButton.style.display = 'none';
+        updateButton.style.display = 'block';
+      });
+  
+      updateButton.addEventListener('click', function (e) {
+        e.preventDefault(); 
+  
+        for (const input of inputs) {
+          input.setAttribute('readonly', 'readonly');
+        }
+        editButton.style.display = 'block';
+        updateButton.style.display = 'none';
+  
+      });
+    });
+  </script>
+
+<script>
+  function validate() {
+    const fname = document.getElementById('fname');
+    const lname = document.getElementById('lname');
+    const email = document.getElementById('email');
+    const mobile = document.getElementById('mobile');
+  
+    const nameRegex = /^[A-Z][a-zA-Z]*$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail+\.[a-zA-Z]{3}$/;
+    const mobileRegex = /^[1-9][0-9]{9}$/;
+  
+    // First Name Validation
+    if (fname.value.trim() === '') {
+      document.getElementById('fnameError').innerHTML = 'First Name is required';
+      return false;
+    }
+    if (!nameRegex.test(fname.value)) {
+      document.getElementById('fnameError').innerHTML = 'Name should start with a capital letter';
+      return false;
+    }
+  
+    // Last Name Validation
+    if (lname.value.trim() === '') {
+      document.getElementById('lnameError').innerHTML = 'Last Name is required';
+      return false;
+    }
+    if (!nameRegex.test(lname.value)) {
+      document.getElementById('lnameError').innerHTML = 'Name should start with a capital letter';
+      return false;
+    }
+  
+    // Email Validation
+    if (email.value.trim() === '') {
+      document.getElementById('emailError').innerHTML = 'Email is required';
+      return false;
+    }
+    if (!emailRegex.test(email.value)) {
+      document.getElementById('emailError').innerHTML = 'Please enter a valid email';
+      return false;
+    }
+  
+    // Mobile Validation
+    if (mobile.value.trim() === '') {
+      document.getElementById('mobileError').innerHTML = 'Mobile Number is required';
+      return false;
+    }
+    if (!mobileRegex.test(mobile.value)) {
+      document.getElementById('mobileError').innerHTML = 'Please enter a valid number';
+      return false;
+    }
+  }
+  </script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

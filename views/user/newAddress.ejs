@@ -1,0 +1,185 @@
+<%- include('header') %>
+
+<main class="main">
+    
+    <section class="mt-50 mb-50">
+        <div class="container">
+            
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-25">
+                        <h4 class="text-center">Add New Address</h4> <!-- Center the title -->
+                    </div>
+                    <div>
+                        <form action="/addAddress" method="post" class="d-flex justify-content-center align-items-center min-vh-100" onsubmit="return validate()">
+                            <!-- Include CSRF token if required -->
+                            <div class="col-lg-6">
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                            <div class="form-group">
+                                                <input type="text" required="" name="name" id="name" placeholder="Name ">
+                                                <p id="nameError"></p>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="address" id="address" required="" placeholder="Address ">
+                                                <p id="addressError"></p>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="district" id="district" required="" placeholder="District">
+                                                <p id="districtError"></p>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input required="" type="text" name="city" id="city" placeholder="City / Town ">
+                                                <p id="cityError"></p>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input required="" type="text" name="pincode" id="pincode" placeholder="Pincode ">
+                                                <p id="pincodeError"></p>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" required="" name="phone" id="phone" placeholder="Mobile ">
+                                                <p id="phoneError"></p>
+
+
+                                            </div>
+                                           
+                                            
+                                            
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                          
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                        </div>
+                       
+                </div>
+                
+            
+        </div>
+    </section>
+</main>
+
+<script>
+    function validate() {
+        // Get form inputs
+        const name = document.getElementById('name');
+        const address = document.getElementById('address');
+        const district = document.getElementById('district');
+        const city = document.getElementById('city');
+        const pincode = document.getElementById('pincode');
+        const phone = document.getElementById('phone');
+
+        // Get error elements
+        const nameError = document.getElementById('nameError');
+        const addressError = document.getElementById('addressError');
+        const districtError = document.getElementById('districtError');
+        const cityError = document.getElementById('cityError');
+        const pincodeError = document.getElementById('pincodeError');
+        const phoneError = document.getElementById('phoneError');
+
+        // Regular expressions (you might need to adjust these)
+        const nameRegex = /^[A-Za-z\s]+$/;
+        const addressRegex = /^[A-Za-z0-9\s]+$/;
+        const districtRegex = /^[A-Za-z\s]+$/;
+        const cityRegex = /^[A-Za-z\s]+$/;
+        const pincodeRegex = /^[1-9][0-9]{5}$/;
+        const phoneRegex = /^[1-9][0-9]{9}$/;
+
+        // Clear all error messages
+        nameError.innerHTML = '';
+        addressError.innerHTML = '';
+        districtError.innerHTML = '';
+        cityError.innerHTML = '';
+        pincodeError.innerHTML = '';
+        phoneError.innerHTML = '';
+
+        // Name Validation
+        if (name.value.trim() === '') {
+            nameError.innerHTML = 'Name is required';
+            nameError.style.color = 'red';
+            return false;
+        }
+        if (!nameRegex.test(name.value)) {
+            nameError.innerHTML = 'Please enter a valid name';
+            nameError.style.color = 'red';
+            return false;
+        }
+
+        // Address Validation
+        if (address.value.trim() === '') {
+            addressError.innerHTML = 'Address is required';
+            addressError.style.color = 'red';
+            return false;
+        }
+        if (!addressRegex.test(address.value)) {
+            addressError.innerHTML = 'Please enter a valid address';
+            addressError.style.color = 'red';
+            return false;
+        }
+
+        // District Validation
+        if (district.value.trim() === '') {
+            districtError.innerHTML = 'District is required';
+            districtError.style.color = 'red';
+            return false;
+        }
+        if (!districtRegex.test(district.value)) {
+            districtError.innerHTML = 'Please enter a valid district';
+            districtError.style.color = 'red';
+            return false;
+        }
+
+        // City Validation
+        if (city.value.trim() === '') {
+            cityError.innerHTML = 'City name is required';
+            cityError.style.color = 'red';
+            return false;
+        }
+        if (!cityRegex.test(city.value)) {
+            cityError.innerHTML = 'Please enter a valid city name';
+            cityError.style.color = 'red';
+            return false;
+        }
+
+        // Pincode Validation
+        if (pincode.value.trim() === '') {
+            pincodeError.innerHTML = 'Pincode is required';
+            pincodeError.style.color = 'red';
+            return false;
+        }
+        if (!pincodeRegex.test(pincode.value)) {
+            pincodeError.innerHTML = 'Please enter a valid pincode';
+            pincodeError.style.color = 'red';
+            return false;
+        }
+
+        // Phone Number Validation
+        if (phone.value.trim() === '') {
+            phoneError.innerHTML = 'Phone Number is required';
+            phoneError.style.color = 'red';
+            return false;
+        }
+        if (!phoneRegex.test(phone.value)) {
+            phoneError.innerHTML = 'Please enter a valid phone number';
+            phoneError.style.color = 'red';
+            return false;
+        }
+
+        return true;
+    }
+</script>

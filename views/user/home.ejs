@@ -1,0 +1,243 @@
+<%- include('header') %>
+
+<main class="main">
+    <section class="home-slider position-relative pt-60">
+        <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+            <% banners.forEach((banner, index) => { %>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                        <div class="row align-items-center slider-animated-1">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="hero-slider-content-2 col-lg-12">
+                                    <img class="default-img img-fluid" src="/admin/assets/bannerImages/<%- banner.image[0] %>" alt="Banner Image" style="max-width: 100%; max-height: 100%; width: 100%; height: 100%;">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+            <div class="slider-arrow hero-slider-1-arrow"></div>
+        </div>
+    </section>
+    
+    
+    
+    
+    <section class="featured section-padding">
+        <div class="container pb-25">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop"> 
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-1.png" alt="">
+                            <h4 class="bg-1">Free Shipping</h4>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-2.png" alt="">
+                            <h4 class="bg-3">Online Order</h4>
+                        </div>
+                    </a> 
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-3.png" alt="">
+                            <h4 class="bg-2">Save Money</h4>
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-4.png" alt="">
+                            <h4 class="bg-4">Promotions</h4>
+                        </div>
+                    </a>
+                   
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-5.png" alt="">
+                            <h4 class="bg-5">Happy Sell</h4>
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                    <a href="/shop">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="/assets/imgs/theme/icons/feature-6.png" alt="">
+                            <h4 class="bg-6">24/7 Support</h4>
+                        </div>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-tabs section-padding position-relative wow fadeIn animated">
+        <div class="bg-square"></div>
+        <div class="container">
+            <div class="shop-product-fillter">
+                        <div class="totall-product">
+                            
+                        </div>
+                        <div class="sort-by-product-area">
+                            <div class="sort-by-cover mr-10">
+                               
+                                
+                            </div>
+                           
+                        </div>
+                    </div>
+           
+            <!--End nav-tabs-->
+            <div class="tab-content wow fadeIn animated" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
+                   
+                    <div class="container">
+                        <div class="row">
+                            
+                            
+                            
+                
+                            <div class="col-lg-12 col-md-9 col-12 col-sm-6">
+                                <div class="row product-grid-4">
+                                    <% for (let i = 0; i < Math.min(8, product.length); i++) { %>
+                                        <div class="col-lg-3 col-md-3 col-6 col-sm-6"> <!-- Adjust the column size to fit two products per row -->
+                                            <div class="product-cart-wrap mb-30">
+                                                <div class="product-img-action-wrap">
+                                                    <div class="product-img product-img-zoom">
+                                                        <a href="/productDetails?id=<%- product[i]._id %>">
+                                                            <img class="default-img" src="/admin/assets/productsImages/<%- product[i].image[0] %>" alt="" style="max-height: 100%; max-width: 100%;">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content-wrap">
+                                                    <div class="product-category">
+                                                        <a href="#"><%- product[i].brandName %></a>
+                                                      </div>
+                                                    
+                                                    <h2><a href="shop-product-right.html"><%- product[i].productName %></a></h2>
+                                                        
+                                                    
+                                                    <div class="product-price">
+                                                        <span>$ <%- product[i].salePrice %></span>
+                                                        <span class="old-price">$ <%- product[i].regularPrice %></span>
+                                                    </div>
+                                                    <form action="/addToWishlist" method="post">
+                                                        <div class="product-action-1 show">
+                                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="/addToWishlist?id=<%- product[i]._id %>"  type="submit"><i class="fi-rs-heart"></i></a>
+                    
+                    
+                                                              <input type="hidden" value="<%- product[i]._id %>" name="id">
+                                                              <h6></h6>
+                                                           
+                                                          
+                    
+                                                            <!-- <span class="out-of-stock">Out of Stock</span> -->
+                                                         
+                                                        </div>
+                                                    </form>
+                                                    <div class="product-action-1 show">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!--End product-grid-4-->
+                </div>
+                <!--En tab one (Featured)-->
+               
+                <!--En tab two (Popular)-->
+               
+                <!--En tab three (New added)-->
+            </div>
+            <!--End tab-content-->
+        </div>
+
+        
+    </section>
+
+    <section class="mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="banner-bg wow fadeIn animated" style="background-image: url('assets/imgs/blog/img4.jpg'); height: 300px;">
+                        <div class="banner-content">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+    <section class="pt-25 pb-35">
+        <div class="container wow fadeIn animated">
+            <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
+            <div class="carausel-6-columns-cover position-relative">
+                <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+                <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                    <% product.forEach(product => { %>
+                        <div class="product-cart-wrap small hover-up">
+                        <div class="product-img-action-wrap">
+                            <div class="product-img product-img-zoom">
+                                <a href="/productDetails?id=<%- product._id %>">
+                                    <img class="default-img" src="/admin/assets/productsImages/<%- product.image[0] %>" alt="">
+                                    
+                                </a>
+                            </div>
+                            <div class="product-action-1 show">
+
+                                <form action="/addToWishlist" method="post">
+                                    <% if (product.quantity > 0) { %>
+                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" ><i class="fi-rs-heart"></i></a>
+                                        <input type="hidden" value="<%- product._id %>" name="id">
+                                    <% } %>
+                                </form>
+                            </div>
+                        </div>   
+                        <div class="product-content-wrap">
+                            <h2><a href="#"><%= product.productName %></a></h2>
+                            <div>
+                                <a href="#"><%- product.brandName %></a>
+                            </div>
+                            <div class="product-price">
+                                <span>$<%= product.salePrice %></span>
+                                <span class="old-price">$<%= product.regularPrice %></span>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+    
+    
+</main>
+    
+<%- include('footer') %>
+

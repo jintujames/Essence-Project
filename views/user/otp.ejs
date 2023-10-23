@@ -1,0 +1,83 @@
+<%- include('header') %>
+<main class="main">   
+    <section class="pt-150 pb-150">
+        <div class="container">
+            <div class="col-lg-10 m-auto">
+                <div class="col-lg-5 mx-auto"> <!-- Added mx-auto class here -->
+                    <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                        <div class="padding_eight_all bg-white">
+                            <div class="d-flex justify-content-center align-items-center mb-4">
+                                <div class="heading_s1 text-center">
+                                    <h3>OTP Verification</h3>
+                                </div>
+                            </div>
+                            <form class="row contact_form" method="post" action="/otp" onsubmit="return validate()">
+                                <div class="form-group">
+                                    <input type="otp" class="form-control" id="otp" name="otp" value="" placeholder="Enter Otp">
+                                    <p id="otpError"></p>
+                                </div>
+                                
+                                </div>
+
+                                <div id="otp-timer">
+                                    <span id="timer">2:00</span> minutes
+                                    <a href="/resendotp">Resend OTP</a>                 
+                                </div>
+                                
+                                
+                                
+                                <div class="login_footer form-group">
+                                    <div class="chek-form">
+                                        <div class="custome-checkbox">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group text-center"> <!-- Center the button and link -->
+                                    <button type="submit" class="btn btn-fill-out btn-block hover-up">Verify</button>
+                                </div>
+                            </form>
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('footer') %>
+
+<script src="/js/otpValidation.js"></script>
+<script>
+    const otpExpirationTime = 120000; // 2 minutes in milliseconds
+
+    function updateTimer() {
+        const timerElement = document.getElementById('timer');
+
+        const currentTime = new Date().getTime();
+        const remainingTime = otpExpirationTime - (currentTime - otpStartTime);
+
+        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+        if (remainingTime <= 0) {
+            // Timer has expired, replace the timer text with a "Resend OTP" link
+            timerElement.innerHTML = '<a href="/resendotp">Resend OTP</a>';
+        } else {
+            // Timer is still running, display the time
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    }
+
+    // Start the timer when the page loads
+    const otpStartTime = new Date().getTime();
+    updateTimer();
+
+    // Update the timer every second
+    setInterval(updateTimer, 1000);
+</script>

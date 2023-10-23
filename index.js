@@ -1,0 +1,18 @@
+const express = require('express');
+
+const app = express();
+ 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/Lancome');
+
+const userRoute = require('./routes/userRoute');
+const adminRoute = require('./routes/adminRoute');
+
+app.use(express.static('public'));
+app.use('/',userRoute);
+
+app.use('/admin',adminRoute);
+
+app.listen(2001, () => {
+    console.log('server started');
+})

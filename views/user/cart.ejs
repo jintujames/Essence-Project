@@ -1,0 +1,205 @@
+<%- include('header') %>
+
+
+   
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/home" rel="nofollow">Home</a>
+                    <span></span> Shop
+                    <span></span> Your Cart
+                </div>
+            </div>
+        </div>
+        <% if (cartProducts.length > 0) { %>
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center clean">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Subtotal</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    
+                                    <% let grandTotal = 0; %>
+
+                                    <% cartProducts.forEach(function(item) { %>
+                                        <tr>
+                                            <td class="image product-thumbnail">
+                                                <img src="/admin/assets/productsImages/<%= item.products.image[0] %>">
+                                            </td>
+                                            <td class="product-des product-name">
+                                                <h5 class="product-name">
+                                                    <%= item.products.productName %>
+                                                    <a href="shop-product-right.html"></a>
+                                                </h5>
+                                                <p class="font-xs">
+                                                    <%= item.products.description %><br>
+                                                    <%= item.products.brandName %>
+                                                </p>
+                                            </td>
+                                            <td class="price" data-title="Price">
+                                                <span>$<%= item.products.salePrice %></span>
+                                            </td>
+                                            <td class="text-center" data-title="Stock">
+                                                <div class="detail-qty border radius m-auto">
+                                                    <a href="#" class="qty-down" data-item-id="<%= item.products._id %>" data-action="decrement"><i class="fi-rs-angle-small-down"></i></a>
+                                                    <span class="qty-val" id="qty-<%= item.products._id %>"><%= item.quantity %></span>
+                                                    <a href="#" class="qty-up" data-item-id="<%= item.products._id %>" data-action="increment"><i class="fi-rs-angle-small-up"></i></a>
+                                                </div>
+                                            </td>
+                                            <td class="text-right" data-title="Cart">
+                                                <span id="subtotal-<%= item.products._id    %>">$<%= (item.products.salePrice * item.quantity).toFixed(2) %></span>
+                                            </td>
+                                            <td class="action" data-title="Remove">
+                                                <a href="/deleteCartProducts/<%= item.products._id %>" class="text-muted"><i class="fi-rs-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        
+                                        <% let itemTotal = item.products.salePrice * item.quantity; %>
+                                        <% grandTotal += itemTotal; %>
+                                    <% }); %>
+                                    
+                                    <!-- Display the grand total at the end of the loop -->                                    
+                                                 
+                                       
+                                    <tr>
+                                        <td colspan="6" class="text-end">
+                                            <a href="/clearCart" class="text-muted"> <i class="fi-rs-cross-small"></i> Clear Cart</a>
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                        <div class="cart-action text-end">
+                            <a class="btn  mr-10 mb-sm-15"><i class="fi-rs-shuffle mr-10"></i>Update Cart</a>
+                            <a class="btn" href="/shop"><i class="fi-rs-shopping-bag mr-10"></i>Continue Shopping</a>
+                        </div>
+                        <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
+                        <div class="row mb-50">
+                            
+                                
+                            <div class="col-lg-6 col-md-12">
+                                <div class="border p-md-4 p-30 border-radius cart-totals">
+                                    <div class="heading_s1 mb-3">
+                                        <h4>Cart Totals</h4>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="cart_total_label">Cart Subtotal</td>
+                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand"><span id="cart-subtotal"></span></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cart_total_label">Shipping</td>
+                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cart_total_label">Total</td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand"><span id="cart-total"></span></span></strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="/checkout?subtotal=<%= grandTotal %>" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <% } else { %>
+            <div class="container mt-5 mb-5">
+                <!-- Add 'mt-5' and 'mb-5' classes for more top and bottom margin -->
+                <div class="card mt-5 mb-5">
+                    <div class="card-body mt-5 mb-5">
+                        <h2 class="card-title text-center">Looks like your cart is empty</h2>
+                        <p class="card-text text-center">We have some more items you might like.</p>
+                        <div class="text-center">
+                            <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery library -->
+
+<script>
+    // Function to update quantity and subtotal
+    function updateQuantity(itemId, action) {
+        $.ajax({
+            type: 'POST',
+            url: `/updateCart?action=${action}&itemId=${itemId}`,
+            success: function (response) {
+                // Update the quantity on the page
+                $(`#qty-${itemId}`).text(response.quantity);
+
+                // Update the subtotal on the page
+                $(`#subtotal-${itemId}`).text('$' + response.subtotal.toFixed(2));
+
+
+                // Fetch updated cart totals using the cartTotals route
+                fetchCartTotals();
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    function fetchCartTotals() {
+        $.ajax({
+            type: 'GET',
+            url: '/cartTotals',
+            success: function (totals) {
+                // Update the cart subtotal and total
+                $('#cart-subtotal').text('$' + totals.subtotal.toFixed(2));
+                $('#cart-total').text('$' + totals.total.toFixed(2));
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    // Attach the click event handlers for increment and decrement links
+    $('.qty-down').on('click', function (e) {
+        e.preventDefault();
+        const itemId = $(this).data('item-id');
+        updateQuantity(itemId, 'decrement');
+    });
+
+    $('.qty-up').on('click', function (e) {
+        e.preventDefault();
+        const itemId = $(this).data('item-id');
+        updateQuantity(itemId, 'increment');
+    });
+
+    // Call fetchCartTotals when the page loads to display initial totals
+    $(document).ready(function () {
+        fetchCartTotals();
+    });
+
+
+</script>

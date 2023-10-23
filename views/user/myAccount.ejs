@@ -1,0 +1,183 @@
+<%- include('header') %>
+
+<main class="main">
+    <section class="pt-50 pb-150 container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"> <!-- Sidebar with tabs -->
+                    <div class="dashboard-menu">
+                        <ul class="nav flex-column" role="tablist">
+                            
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="dashboard-tab"  href="/myAccount"   ><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="orders-tab"  href="/orders" ><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="track-orders-tab"  href="#track-orders" ><i class="fi-rs-shopping-cart-check mr-10"></i>Track Your Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="address-tab" href="/myAddress" ><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="account-detail-tab"  href="/wallet" ><i class="fi-rs-user mr-10"></i>Wallet</a>
+                                </li>
+                                
+                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9"> <!-- Content area -->
+                    <div class="content-header">
+                        <div>
+                            <h2 class="content-title card-title">My Account</h2>
+                            
+                        </div>
+                        
+                    </div>
+
+                    <section class="content-main">
+                        <div class="row">
+                            
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h4>Basic</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="mb-4">
+                                                <label for="product_name" class="form-label">Product title</label>
+                                                <input type="text" placeholder="Type here" class="form-control" id="product_name">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">Full description</label>
+                                                <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Regular price</label>
+                                                        <div class="row gx-2">
+                                                            <input placeholder="$" type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Promotional price</label>
+                                                        <input placeholder="$" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Currency</label>
+                                                    <select class="form-select">
+                                                        <option> USD </option>
+                                                        <option> EUR </option>
+                                                        <option> RUBL </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">Tax rate</label>
+                                                <input type="text" placeholder="%" class="form-control" id="product_name">
+                                            </div>
+                                            <label class="form-check mb-4">
+                                                <input class="form-check-input" type="checkbox" value="">
+                                                <span class="form-check-label"> Make a template </span>
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div> <!-- card end// -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h4>Shipping</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-4">
+                                                        <label for="product_name" class="form-label">Width</label>
+                                                        <input type="text" placeholder="inch" class="form-control" id="product_name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-4">
+                                                        <label for="product_name" class="form-label">Height</label>
+                                                        <input type="text" placeholder="inch" class="form-control" id="product_name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="product_name" class="form-label">Weight</label>
+                                                <input type="text" placeholder="gam" class="form-control" id="product_name">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="product_name" class="form-label">Shipping fees</label>
+                                                <input type="text" placeholder="$" class="form-control" id="product_name">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> <!-- card end// -->
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h4>Media</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="input-upload">
+                                            <img src="assets/imgs/theme/upload.svg" alt="">
+                                            <input class="form-control" type="file">
+                                        </div>
+                                    </div>
+                                </div> <!-- card end// -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h4>Organization</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row gx-2">
+                                            <div class="col-sm-6 mb-3">
+                                                <label class="form-label">Category</label>
+                                                <select class="form-select">
+                                                    <option> Automobiles </option>
+                                                    <option> Home items </option>
+                                                    <option> Electronics </option>
+                                                    <option> Smartphones </option>
+                                                    <option> Sport items </option>
+                                                    <option> Baby and Tous </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6 mb-3">
+                                                <label class="form-label">Sub-category</label>
+                                                <select class="form-select">
+                                                    <option> Nissan </option>
+                                                    <option> Honda </option>
+                                                    <option> Mercedes </option>
+                                                    <option> Chevrolet </option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="product_name" class="form-label">Tags</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div> <!-- row.// -->
+                                    </div>
+                                </div> <!-- card end// -->
+                            </div>
+                        </div>
+                    </section> <!-- card-body end// -->
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    
+<%- include('footer') %>
