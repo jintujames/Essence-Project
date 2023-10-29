@@ -6,51 +6,37 @@ const mongoose = require('mongoose');
 
 const applyCoupon = async (req, res) => {
   try {
-    const userId = req.session.user_id;
-    const { couponCode } = req.body;
-    const cartTotal = parseFloat(req.body.cartTotal);
-    console.log(cartTotal);
-    const coupon = await Coupon.findOne({ code: couponCode, isActive: true });
-    const currentDate = new Date();
-    if (couponCode === "") {
-      res.json("Not Applied");
-    }
-    if (!coupon) {
-      res.json({ error: "Invalid coupon code" });
-    }
-    if (coupon.usedBy.includes(userId)) {
-      res.json({ error: "Coupon has already been used" });
-    }
-    if (currentDate > coupon.expirationDate) {
-      res.json({ error: "This coupon has expired" });
-    }
-    if (cartTotal < coupon.minAmount) {
-      res.json({
-        error: "Cart total does not meet the minimum total amount",
-      });
-    }
-    const discountAmount = (coupon.discountPercentage / 100) * cartTotal;
-    let couponSaving = 0;
-    if (discountAmount > coupon.maxDiscount) {
-      couponSaving = Math.floor(coupon.maxDiscount);
-    } else {
-      couponSaving = Math.floor(discountAmount);
-    }
-    const newTotal = Math.floor(cartTotal - couponSaving);
 
-    req.session.discountPrice = couponSaving;
-    req.session.afterDiscount = newTotal;
-    req.session.couponCode = couponCode;
+    const couponId = req.params.couponId;
+        const coupon = await Coupon.findById(couponId);
 
-    res.json({
-      offer: couponSaving,
-      total: newTotal,
-      success: "Coupon applied",
-    });
+        const subTotal = parseInt(req.query.subtotal);
+
+        let discount = subTotal * (coupon.discountPercentage / 100);
+
+        if (discount > coupon.maxDiscount) {
+            discount = coupon.maxDiscount;
+        }
+        const discountedPrice = subTotal - discount;
+
+        res.json({ discountedPrice, discount })
+   
   } catch (error) { }
 }
 
+const selectCoupon = async (req, res) => {
+  try {
 
+      const couponId = req.params.couponId;
+
+      const coupon = await Coupon.findById(couponId);
+
+      res.json(coupon);
+
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 //Remove_Coupon
 const removeCoupon = async (req, res) => {
@@ -69,5 +55,6 @@ const removeCoupon = async (req, res) => {
 module.exports = {
 
   applyCoupon,
+  selectCoupon,
   removeCoupon
 }

@@ -12,7 +12,7 @@ const orderController = require('../controller/orderController');
 const accountController = require('../controller/accountController');
 const block = require('../middleware/blockedUser');
 const couponController = require('../controller/couponController');
-
+const checkCart = require('../middleware/checkCart');
 
 
 userRoute.use(nocache());
@@ -88,7 +88,7 @@ userRoute.get('/signup', userController.loadSignup);
 
 // checkout
 
-userRoute.get('/checkout',block.check, userController.loadCheckout);
+userRoute.get('/checkout',block.check, checkCart.checkCart, userController.loadCheckout);
 userRoute.get('/newAddress', block.check, userController.loadNewAddress);
 
 userRoute.post('/addAddress', block.check, userController.addAddress);
@@ -131,9 +131,9 @@ userRoute.get('/wallet', auth.isLogin, block.check, orderController.viewWallet);
 
 // Coupons
 
-userRoute.post('/apply-coupon',  block.check, couponController.applyCoupon);
+userRoute.get('/applyCoupon/:couponId',  block.check, couponController.applyCoupon);
 userRoute.get('/remove-coupon',  block.check, couponController.removeCoupon)
-
+userRoute.get('/selectCoupon/:couponId', block.check, couponController.selectCoupon)
 
 
 

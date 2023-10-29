@@ -9,11 +9,11 @@ const loadCart = async (req, res) => {
         console.log(userData);
 
         const cartProducts = await User.findById(userData).populate('cart.products');
-        console.log(cartProducts);
+        // console.log(cartProducts);
 
 
         const cartItems = cartProducts.cart;
-        console.log(cartItems);
+        // console.log(cartItems);
 
 
 
@@ -27,10 +27,11 @@ const loadCart = async (req, res) => {
 const addToCart = async (req, res) => {
     try {
         const userData = await User.findById({ _id: req.session.user_id })
+        // console.log(userData._id);
 
         const productId = req.body.id
 
-        const user = await User.findById(userData);
+        const user = await User.findById(userData._id);
 
         const existingCartItem = user.cart.find(item =>
             String(item.products._id) === String(productId)

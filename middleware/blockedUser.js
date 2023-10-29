@@ -7,7 +7,6 @@ const check = async (req, res, next) => {
         try {
             const user = await User.findById(userId);
             if (user && !user.isActive) {
-                console.log("falseeee");
                 req.session.user_id = null;
                 req.session.destroy((err) => {
                     if (err) {
@@ -16,7 +15,6 @@ const check = async (req, res, next) => {
                     res.render('403page');
                 });
             } else {
-                console.log("elseeeee");
                 next();
             }
         } catch (err) {

@@ -615,6 +615,9 @@ const loadCheckout = async (req, res) => {
 
         const validCoupons = coupons.filter(coupon => coupon.minAmount < grandTotal)
 
+        console.log("coupons",coupons);
+        console.log("validCoupons",validCoupons);
+
         res.render('checkout', { user: user, addresses: address, coupons: validCoupons });
     } catch (error) {
         console.log(error.message);

@@ -151,7 +151,7 @@ const placeOrder = async (req, res) => {
 const loadConfirmOrder = async (req, res) => {
     try {
 
-        res.render('orderSuccess');
+        res.render('ordersuccess');
 
     } catch (error) {
 
@@ -201,15 +201,13 @@ const returnOrder = async (req, res) => {
 
 
         const order = await Orders.findById(orderId);
+        console.log("order",order);
 
-        if (order.paymentMethod.toLowerCase() === 'onlinepayment' ||
-            order.paymentMethod.toLowerCase() === 'wallet' ||
-            order.paymentMethod.toLowerCase() === 'COD' && order.orderStatus.toLowerCase() === 'Delivered') {
+        if (order.paymentMethod === 'onlinepayment' ||
+            order.paymentMethod === 'wallet' ||
+            order.paymentMethod === 'COD' && order.orderStatus === 'Delivered') {
             const user = await User.findById(userId);
 
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
 
             const userIds = await User.findByIdAndUpdate(userId, {
                 $push: {
@@ -220,11 +218,6 @@ const returnOrder = async (req, res) => {
                     },
                 },
             })
-                .then(() => {
-                })
-                .catch((error) => {
-                    console.error('Error updating user transactions:', error);
-                });
 
             user.walletBalance += order.total
 

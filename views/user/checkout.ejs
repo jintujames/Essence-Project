@@ -432,63 +432,63 @@
             }
 
             // Add an event listener to the "Apply" button
-            document.getElementById("applyCouponButton").addEventListener("click", function (event) {
-                event.preventDefault();
+            // document.getElementById("applyCouponButton").addEventListener("click", function (event) {
+            //     event.preventDefault();
 
-                // Get the selected coupon code from the input field
-                const selectedCouponCode = document.getElementById("couponInput").value;
+            //     // Get the selected coupon code from the input field
+            //     const selectedCouponCode = document.getElementById("couponInput").value;
 
-                // Send an AJAX request to apply the coupon
-                fetch("/apply-coupon", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ couponCode: selectedCouponCode }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.discount) {
-                            // Update the displayed discount and total
-                            // Update the DOM elements where you display subTotal and Total
-                            document.querySelector(".product-subtotal").innerHTML = `$${data.newTotal.toFixed(2)}`;
-                            document.querySelector(".coupon-savings").textContent = `$${data.discount.toFixed(2)}`;
-                        } else {
-                            // Handle errors (e.g., show error messages to the user)
-                            console.error(data.error);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            });
+            //     // Send an AJAX request to apply the coupon
+            //     fetch("/apply-coupon", {
+            //         method: "POST",
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //         },
+            //         body: JSON.stringify({ couponCode: selectedCouponCode }),
+            //     })
+            //         .then((response) => response.json())
+            //         .then((data) => {
+            //             if (data.discount) {
+            //                 // Update the displayed discount and total
+            //                 // Update the DOM elements where you display subTotal and Total
+            //                 document.querySelector(".product-subtotal").innerHTML = `$${data.newTotal.toFixed(2)}`;
+            //                 document.querySelector(".coupon-savings").textContent = `$${data.discount.toFixed(2)}`;
+            //             } else {
+            //                 // Handle errors (e.g., show error messages to the user)
+            //                 console.error(data.error);
+            //             }
+            //         })
+            //         .catch((error) => {
+            //             console.error(error);
+            //         });
+            // });
 
-            function applyCoupon() {
-                const selectedCouponId = $('#couponDropdown').val();
-                const currentTotal = parseFloat($('#totalAmount').text());
+            // function applyCoupon() {
+            //     const selectedCouponId = $('#couponDropdown').val();
+            //     const currentTotal = parseFloat($('#totalAmount').text());
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/apply-coupon',
-                    data: {
-                        selectedCoupon: selectedCouponId,
-                        currentTotal: currentTotal,
-                    },
-                    success: function (response) {
-                        if (!response.error) {
-                            $('#discountPrice').text(response.discountPrice.toFixed(2));
-                            $('#updatedTotal').text(response.newTotal.toFixed(2));
-                        } else {
-                            alert('Invalid coupon. Please try another.');
-                        }
-                    },
-                    error: function () {
-                        alert('An error occurred while applying the coupon.');
-                    },
-                });
-            }
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/apply-coupon',
+            //         data: {
+            //             selectedCoupon: selectedCouponId,
+            //             currentTotal: currentTotal,
+            //         },
+            //         success: function (response) {
+            //             if (!response.error) {
+            //                 $('#discountPrice').text(response.discountPrice.toFixed(2));
+            //                 $('#updatedTotal').text(response.newTotal.toFixed(2));
+            //             } else {
+            //                 alert('Invalid coupon. Please try another.');
+            //             }
+            //         },
+            //         error: function () {
+            //             alert('An error occurred while applying the coupon.');
+            //         },
+            //     });
+            // }
 
-            $('#applyCouponButton').click(applyCoupon);
+            // $('#applyCouponButton').click(applyCoupon);
 
         </script>
 
@@ -518,12 +518,7 @@
                     } else {
                         couponDetails.innerHTML = '';
                     }
-                    const couponDetailsData = {
-                        code: 'COUPON_CODE',
-                        description: 'Coupon Description',
-                        discountPercent: 10,
-                        maxDiscount: 100,
-                    };
+                    
 
                     couponDetails.innerHTML = `
                 <h3>${couponDetailsData.code}</h3>
@@ -545,7 +540,6 @@
                     const subtotal = $('.product-subtotal').data('subtotal'); // Corrected selector
 
                     if (selectedCouponId) {
-
 
                         $.ajax({
                             type: 'GET',
@@ -587,3 +581,4 @@
 
 
         </script>
+       
