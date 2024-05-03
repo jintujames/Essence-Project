@@ -37,5 +37,5 @@ app.use('/admin',adminRoute);
 app.listen(2001, () => {
     console.log('server started');
 
-    
 })
+
