@@ -4,7 +4,7 @@ const Products = require('../model/productsModel');
 const Banner = require('../model/bannerModel');
 const PDFDocument = require('pdfkit')
 const fs = require('fs')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Admin = require('../model/adminModel');
 
 

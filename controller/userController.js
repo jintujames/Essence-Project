@@ -7,7 +7,7 @@ const Banner = require('../model/bannerModel');
 
 let otp = 0;
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const insertUser = async (req, res) => {
 
