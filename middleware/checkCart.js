@@ -10,6 +10,7 @@ const checkCart = async(req,res,next) => {
             res.redirect('/cart');
         }
         else {
+            
             next()
         }
         
